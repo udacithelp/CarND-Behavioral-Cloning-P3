@@ -7,8 +7,8 @@ from scipy import ndimage
 from keras.models import Sequential
 from keras.layers import Flatten, Dense, Lambda, Cropping2D
 #
-from keras.layers import Convolution2D
-# from keras.layers import Conv2D
+# from keras.layers import Convolution2D
+from keras.layers import Conv2D
 from keras.layers.pooling import MaxPooling2D
 #
 from keras.callbacks import EarlyStopping, ModelCheckpoint
@@ -91,9 +91,9 @@ def lenet():
     IM_DIM=(160,320,3)
     model.add(Lambda(lambda x: (x/255.0) - 0.5, input_shape=IM_DIM))
     model.add(Cropping2D(cropping=((50,20), (0,0))))
-    model.add(Convolution2D(6,5,5,activation='relu'))
+    model.add(Conv2D(6,5,5,activation='relu'))
     model.add(MaxPooling2D())
-    model.add(Convolution2D(6,5,5,activation='relu'))
+    model.add(Conv2D(6,5,5,activation='relu'))
     model.add(MaxPooling2D())
     model.add(Flatten())
     model.add(Dense(120))
@@ -108,12 +108,12 @@ def myNet():
     model.add(Lambda(lambda x: (x/255.0) - 0.5))
 #    model.add(Lambda(lambda x: (x/255.0) - 0.5, input_shape=IM_DIM))
 #    model.add(Cropping2D(cropping=((50,20), (0,0))))
-    model.add(Convolution2D(6,5,5,activation='relu'))
+    model.add(Conv2D(6,5,5,activation='relu'))
     model.add(MaxPooling2D())
-    model.add(Convolution2D(6,5,5,activation='relu'))
+    model.add(Conv2D(6,5,5,activation='relu'))
     model.add(MaxPooling2D())
     #
-    model.add(Convolution2D(6,5,5,activation='relu'))
+    model.add(Conv2D(6,5,5,activation='relu'))
     model.add(MaxPooling2D())
     model.add(layers.Dropout(0.5))  # rate: float between 0 and 1. Fraction of the input units to drop.
     #
@@ -128,11 +128,11 @@ def nvidia():
     IM_DIM=(160,320,3)
     model.add(Cropping2D(cropping=((60,20), (0,0)), input_shape=IM_DIM))
     model.add(Lambda(lambda x: (x/255.0) - 0.5))
-    model.add(Convolution2D(24,5,5, subsample=(2,2), activation='relu'))
-    model.add(Convolution2D(36,5,5, subsample=(2,2), activation='relu'))
-    model.add(Convolution2D(48,5,5, subsample=(2,2), activation='relu'))
-    model.add(Convolution2D(64,3,3, activation='relu'))
-    model.add(Convolution2D(64,3,3, activation='relu'))
+    model.add(Conv2D(24,5,5, subsample=(2,2), activation='relu'))
+    model.add(Conv2D(36,5,5, subsample=(2,2), activation='relu'))
+    model.add(Conv2D(48,5,5, subsample=(2,2), activation='relu'))
+    model.add(Conv2D(64,3,3, activation='relu'))
+    model.add(Conv2D(64,3,3, activation='relu'))
     model.add(layers.Dropout(0.1))  # rate: float between 0 and 1. Fraction of the input units to drop.
     model.add(Flatten())
     model.add(Dense(100))
