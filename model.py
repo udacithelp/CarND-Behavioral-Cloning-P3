@@ -126,7 +126,7 @@ def myNet():
 def nvidia():
     model = Sequential()    
     IM_DIM=(160,320,3)
-    model.add(Cropping2D(cropping=((60,20), (0,0)), input_shape=IM_DIM))
+    model.add(Cropping2D(cropping=((70,30), (0,0)), input_shape=IM_DIM))
     model.add(Lambda(lambda x: (x/255.0) - 0.5))
     model.add(Conv2D(24,(5,5), strides=(2,2), activation='relu'))
     model.add(Conv2D(36,(5,5), strides=(2,2), activation='relu'))
