@@ -73,6 +73,8 @@ The following were undertaken:
 the image, in things like the sky.
   - I used early stopping with a patience=4 parameter that I learned about googling here: https://chrisalbon.com/deep_learning/keras/neural_network_early_stopping/
 
+I liked the early-stopping parameters.  You can see the term it monitors is the val_loss, rather than the pure loss, which limits to the cross-validation section only.  This is very helpful.
+
 The model was trained and validated on different data sets to ensure that the model was not overfitting. The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
 
 #### 3. Model parameter tuning
