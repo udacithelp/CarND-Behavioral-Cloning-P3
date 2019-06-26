@@ -4,7 +4,7 @@ import os
 from cv2 import cv2
 import numpy as np
 from scipy import ndimage
-from keras.models import Sequential
+from keras.models import Sequential, Model
 from keras.layers import Flatten, Dense, Lambda, Cropping2D
 #
 # from keras.layers import Convolution2D
@@ -12,6 +12,7 @@ from keras.layers import Conv2D
 from keras.layers.pooling import MaxPooling2D
 #
 from keras.callbacks import EarlyStopping, ModelCheckpoint
+import matplotlib.pyplot as plt
 
 np.random.seed(7)
 
@@ -21,6 +22,7 @@ with open("data/driving_log.csv") as csvfile:
     for line in reader:
         lines.append(line)
 
+# This is the multi-camera code.  I won't add unless necessary        
 # with open(csv_file, 'r') as f:
 #     reader = csv.reader(f)
 #     for row in reader:
@@ -193,3 +195,15 @@ model.save('model.h5')
 # plt.legend(['training set', 'validation set'], loc='upper right')
 # plt.show()
 
+
+
+# CROPPING NOTES:
+# model.add(Cropping2D(cropping=((50,20), (0,0)), input_shape=(160,320,3)))
+# ...
+
+# The example above crops:
+
+#     50 rows pixels from the top of the image
+#     20 rows pixels from the bottom of the image
+#     0 columns of pixels from the left of the image
+#     0 columns of pixels from the right of the image
