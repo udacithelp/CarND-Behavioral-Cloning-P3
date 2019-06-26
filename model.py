@@ -134,6 +134,7 @@ def nvidia():
     model.add(Conv2D(64,(3,3), activation='relu'))
     model.add(Conv2D(64,(3,3), activation='relu'))
     model.add(layers.Dropout(rate=0.1))  # rate: float between 0 and 1. Fraction of the input units to drop.
+#    model.add(layers.Dropout(rate=0.5))  # rate: float between 0 and 1. Fraction of the input units to drop.
     model.add(Flatten())
     model.add(Dense(100))
     model.add(Dense(50))
@@ -150,10 +151,12 @@ model = nvidia()
 # measurement_flipped = -measurement
     
 model.compile(loss="mse", optimizer="adam")
+# model.compile(loss="kullback_leibler_divergence", optimizer="adam")
 # model.fit(X_train, y_train, validation_split=0.2, shuffle=True, nb_epoch=20)
 # maybe early stopping?
 # https://chrisalbon.com/deep_learning/keras/neural_network_early_stopping/
-callbacks = [EarlyStopping(monitor='val_loss', patience=5),
+#callbacks = [EarlyStopping(monitor='val_loss', patience=4),
+callbacks = [EarlyStopping(monitor='val_loss', patience=3),
              ModelCheckpoint(filepath='best_model.h5', monitor='val_loss', save_best_only=True)]
 model.fit(X_train, y_train, validation_split=0.2, shuffle=True, epochs=20, callbacks=callbacks)
 
