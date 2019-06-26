@@ -113,7 +113,8 @@ I had a lot of trouble getting the simulation to run in the first place, so I st
 with the training data given as a sample.
 
 My preprocessing was very helpful, and consisted of flipping the images and measurements to double the training
-data.
+data. I considered using the left and right cameras or collecting more data, but was impressed to see that
+my car was better able to stay on the road than I was after only undertaking this simple data augmentation.
 
 I finally randomly shuffled the data set and put 20% of the data into a validation set. 
 
