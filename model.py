@@ -57,17 +57,20 @@ for line in lines[1:]:
     current_path = os.path.join(os.getcwd(), "data/IMG/", filename)
     # print(os.getcwd())
     #     NOTE: cv2.imread will get images in BGR format, while drive.py uses RGB. In the video above one way you could keep the same image formatting is to do "image = ndimage.imread(current_path)" with "from scipy import ndimage" instead.
-    bgr = cv2.imread(current_path)
-    rgb = bgr[...,::-1]
-    image = rgb
+    # bgr = cv2.imread(current_path)
+    # rgb = bgr[...,::-1]
+    # image = rgb
     # image = ndimage.imread(current_path)
     # image = cv2.imread(current_path)
     # print(current_path)
-    # bgr = cv2.imread(current_path)
-    # image = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
+    bgr = cv2.imread(current_path)
+    image = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
     images.append(image)
     measurement = float(line[3])
     measurements.append(measurement)
+    # NOW FLIP FLIP FLIP
+    images.append(cv2.flip(image,1))
+    measurements.append(measurement*-1.0)
 
 # print(measurements)
 
@@ -108,12 +111,12 @@ def myNet():
     model.add(Lambda(lambda x: (x/255.0) - 0.5))
 #    model.add(Lambda(lambda x: (x/255.0) - 0.5, input_shape=IM_DIM))
 #    model.add(Cropping2D(cropping=((50,20), (0,0))))
-    model.add(Conv2D(6,(5,5),activation='relu'))
+    model.add(Conv2D(6,5,5,activation='relu'))
     model.add(MaxPooling2D())
-    model.add(Conv2D(6,(5,5),activation='relu'))
+    model.add(Conv2D(6,5,5,activation='relu'))
     model.add(MaxPooling2D())
     #
-    model.add(Conv2D(6,(5,5),activation='relu'))
+    model.add(Conv2D(6,5,5,activation='relu'))
     model.add(MaxPooling2D())
     model.add(layers.Dropout(rate=0.1))  # rate: float between 0 and 1. Fraction of the input units to drop.
     #
@@ -126,17 +129,25 @@ def myNet():
 def nvidia():
     model = Sequential()    
     IM_DIM=(160,320,3)
-    model.add(Cropping2D(cropping=((70,30), (0,0)), input_shape=IM_DIM))
+#    model.add(Cropping2D(cropping=((50,20), (0,0)), input_shape=IM_DIM))
+    model.add(Cropping2D(cropping=((60,20), (0,0)), input_shape=IM_DIM))
     model.add(Lambda(lambda x: (x/255.0) - 0.5))
     model.add(Conv2D(24,(5,5), strides=(2,2), activation='relu'))
     model.add(Conv2D(36,(5,5), strides=(2,2), activation='relu'))
     model.add(Conv2D(48,(5,5), strides=(2,2), activation='relu'))
     model.add(Conv2D(64,(3,3), activation='relu'))
-    model.add(Conv2D(64,(3,3), activation='relu'))
+    model.add(Conv2D(64,(3,3), activation='relu'))    
+    # model.add(Conv2D(24,5,5, subsample=(2,2), activation='relu'))
+    # model.add(Conv2D(36,5,5, subsample=(2,2), activation='relu'))
+    # model.add(Conv2D(48,5,5, subsample=(2,2), activation='relu'))
+    # model.add(Conv2D(64,3,3, activation='relu'))
+    # model.add(Conv2D(64,3,3, activation='relu'))
+    model.add(Flatten())
+    # MOVE THIS TO AFTER FLATTEN?
     model.add(layers.Dropout(rate=0.1))  # rate: float between 0 and 1. Fraction of the input units to drop.
 #    model.add(layers.Dropout(rate=0.5))  # rate: float between 0 and 1. Fraction of the input units to drop.
-    model.add(Flatten())
     model.add(Dense(100))
+#    model.add(Dense(80)) # my addition
     model.add(Dense(50))
     model.add(Dense(10))
     model.add(Dense(1))
@@ -156,7 +167,7 @@ model.compile(loss="mse", optimizer="adam")
 # maybe early stopping?
 # https://chrisalbon.com/deep_learning/keras/neural_network_early_stopping/
 #callbacks = [EarlyStopping(monitor='val_loss', patience=4),
-callbacks = [EarlyStopping(monitor='val_loss', patience=3),
+callbacks = [EarlyStopping(monitor='val_loss', patience=4),
              ModelCheckpoint(filepath='best_model.h5', monitor='val_loss', save_best_only=True)]
 model.fit(X_train, y_train, validation_split=0.2, shuffle=True, epochs=20, callbacks=callbacks)
 
