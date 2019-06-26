@@ -103,6 +103,8 @@ I did not attempt the generator formulation, but could add if necessary.
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
 
+Another interesting point on this: the training was slow, but entirely sufficient on a non-GPU laptop.
+
 #### 2. Final Model Architecture
 
 The final model architecture consisted of a convolution neural network discussed above that was essentially the nvidia but with a dropout layer between the convolutional and flattening layer.
