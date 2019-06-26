@@ -94,7 +94,10 @@ I started out with the simplest regression model that would get the car to go, t
 nvidia models discussed in class.  I changed cropping and early stopping parameters, but found the most
 benefit from adding data augmentation and modifying dropout rates.
 
-After I had something that worked, I gradually added code complexity in the form of the model_fit_generator.
+After I had something that worked, I gradually added code complexity.  I tried other fits besides mse, but found
+it was the most effective.
+
+I did not attempt the generator formulation, but could add if necessary.
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
 
