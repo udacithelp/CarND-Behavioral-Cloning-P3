@@ -158,10 +158,6 @@ def nvidia():
 
 # model = myNet()
 model = nvidia()
-
-# DATA AUGMENTATION # MEH
-# image_flipped = np.fliplr(image)
-# measurement_flipped = -measurement
     
 model.compile(loss="mse", optimizer="adam")
 # model.compile(loss="kullback_leibler_divergence", optimizer="adam")
