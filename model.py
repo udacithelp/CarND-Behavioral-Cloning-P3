@@ -91,9 +91,9 @@ def lenet():
     IM_DIM=(160,320,3)
     model.add(Lambda(lambda x: (x/255.0) - 0.5, input_shape=IM_DIM))
     model.add(Cropping2D(cropping=((50,20), (0,0))))
-    model.add(Conv2D(6,5,5,activation='relu'))
+    model.add(Conv2D(6,(5,5),activation='relu'))
     model.add(MaxPooling2D())
-    model.add(Conv2D(6,5,5,activation='relu'))
+    model.add(Conv2D(6,(5,5),activation='relu'))
     model.add(MaxPooling2D())
     model.add(Flatten())
     model.add(Dense(120))
@@ -108,14 +108,14 @@ def myNet():
     model.add(Lambda(lambda x: (x/255.0) - 0.5))
 #    model.add(Lambda(lambda x: (x/255.0) - 0.5, input_shape=IM_DIM))
 #    model.add(Cropping2D(cropping=((50,20), (0,0))))
-    model.add(Conv2D(6,5,5,activation='relu'))
+    model.add(Conv2D(6,(5,5),activation='relu'))
     model.add(MaxPooling2D())
-    model.add(Conv2D(6,5,5,activation='relu'))
+    model.add(Conv2D(6,(5,5),activation='relu'))
     model.add(MaxPooling2D())
     #
-    model.add(Conv2D(6,5,5,activation='relu'))
+    model.add(Conv2D(6,(5,5),activation='relu'))
     model.add(MaxPooling2D())
-    model.add(layers.Dropout(0.5))  # rate: float between 0 and 1. Fraction of the input units to drop.
+    model.add(layers.Dropout(rate=0.1))  # rate: float between 0 and 1. Fraction of the input units to drop.
     #
     model.add(Flatten())
     model.add(Dense(120))
@@ -128,12 +128,12 @@ def nvidia():
     IM_DIM=(160,320,3)
     model.add(Cropping2D(cropping=((60,20), (0,0)), input_shape=IM_DIM))
     model.add(Lambda(lambda x: (x/255.0) - 0.5))
-    model.add(Conv2D(24,5,5, subsample=(2,2), activation='relu'))
-    model.add(Conv2D(36,5,5, subsample=(2,2), activation='relu'))
-    model.add(Conv2D(48,5,5, subsample=(2,2), activation='relu'))
-    model.add(Conv2D(64,3,3, activation='relu'))
-    model.add(Conv2D(64,3,3, activation='relu'))
-    model.add(layers.Dropout(0.1))  # rate: float between 0 and 1. Fraction of the input units to drop.
+    model.add(Conv2D(24,(5,5), strides=(2,2), activation='relu'))
+    model.add(Conv2D(36,(5,5), strides=(2,2), activation='relu'))
+    model.add(Conv2D(48,(5,5), strides=(2,2), activation='relu'))
+    model.add(Conv2D(64,(3,3), activation='relu'))
+    model.add(Conv2D(64,(3,3), activation='relu'))
+    model.add(layers.Dropout(rate=0.1))  # rate: float between 0 and 1. Fraction of the input units to drop.
     model.add(Flatten())
     model.add(Dense(100))
     model.add(Dense(50))
@@ -153,7 +153,7 @@ model.compile(loss="mse", optimizer="adam")
 # model.fit(X_train, y_train, validation_split=0.2, shuffle=True, nb_epoch=20)
 # maybe early stopping?
 # https://chrisalbon.com/deep_learning/keras/neural_network_early_stopping/
-callbacks = [EarlyStopping(monitor='val_loss', patience=2),
+callbacks = [EarlyStopping(monitor='val_loss', patience=5),
              ModelCheckpoint(filepath='best_model.h5', monitor='val_loss', save_best_only=True)]
 model.fit(X_train, y_train, validation_split=0.2, shuffle=True, epochs=20, callbacks=callbacks)
 
