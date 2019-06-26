@@ -1,0 +1,13 @@
+python-dotenv
+eventlet
+Flask-SocketIO
+h5py
+imgaug
+matplotlib
+numpy
+scipy
+opencv-python
+pandas
+pylint
+keras
+tensorflow
