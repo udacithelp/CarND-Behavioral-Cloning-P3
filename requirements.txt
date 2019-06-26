@@ -11,3 +11,4 @@ pandas
 pylint
 keras
 tensorflow
+moveiepy
